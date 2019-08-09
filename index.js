@@ -45,6 +45,8 @@ const chores = [
     }
 ]
 
+let choreID = 3
+
 
 
 server.get('/', (req, res) => {
@@ -53,8 +55,15 @@ server.get('/', (req, res) => {
 
 server.get('/chores', (req, res) => {
 
-    
-    res.status(200).json(chores)
+    const com = req.query.com;
+
+    if(com){
+        const filter = com === 'true' ? true : false;
+        const result = chores.filter(chore => chore.com === filter);
+        res.status(200).json(result)
+    } else {
+        res.status(200).json(chores)
+    }
 });
 
 server.get('/chores/:id', (req, res) => {
@@ -70,6 +79,10 @@ server.put('/chores', (req, res) => {
 server.post('/chores', (req, res) => {
     const chore = req.body
     
+    chore.id = choreID
+
+    choreID = choreID + 1
+
     chores.push(chore)
 
     res.status(200).json(chore)
