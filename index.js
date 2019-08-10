@@ -67,7 +67,8 @@ server.get('/chores', (req, res) => {
 });
 
 server.get('/chores/:id', (req, res) => {
-    
+    const chore = chores.find(chore.id === Number(req.params.id))
+    res.status(200).json(chore)
 });
 
 
